@@ -1,0 +1,31 @@
+{
+ "note": "`hard`: pairs skipped in every sweep, derived from reps[].gens[].stop across all stored arms plus manual entries; `declared`: per-model scenario lists masked across every question and the controls.",
+ "hard": [
+  "H04::fable-5",
+  "H07::fable-5",
+  "U02::fable-5"
+ ],
+ "declared": {
+  "fable-5": [
+   "H01",
+   "H02",
+   "H04",
+   "H03",
+   "H05",
+   "H06",
+   "H07",
+   "H08",
+   "H09",
+   "H10",
+   "U01",
+   "U02",
+   "U03",
+   "U04",
+   "U06"
+  ],
+  "gemini-3.6-flash": [
+   "H05"
+  ]
+ },
+ "declared_note": "DECLARED, not derived. For each model listed, those scenarios are masked across ALL research questions AND the controls — one answer per (scenario, model), whichever table or runner asks. fable-5: 15 rows (2026-08-21; the provider's safety classifier refuses the model as the AUTHOR of these rows). gemini-3.6-flash: H05 (2026-08-22; content_filter/PROHIBITED_CONTENT on ~2 of every 3 attempts, so the cell cannot be driven to n=8). Cross-model arms are exempt: there the declared model is the executor, not the author (see suite_store.is_masked)."
+}

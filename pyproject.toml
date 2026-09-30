@@ -1,0 +1,23 @@
+[project]
+name = "self-propagation"
+version = "1.0.0"
+description = "Harness, scenarios and frozen payloads for studying self-propagation of misaligned goals via agentic memory"
+requires-python = ">=3.11"
+readme = "README.md"
+
+dependencies = [
+    "anthropic>=0.42,<1.0",      # Claude targets + the judge model (Messages API)
+    "openai>=1.40,<2.0",         # OpenAI, OpenRouter and Google via the OpenAI-compatible API
+    "httpx>=0.27,<1.0",
+    "python-dotenv>=1.0,<2.0",
+    "pydantic>=2.7,<3.0",        # typed judge verdicts
+    "pyyaml>=6.0,<7.0",          # configs/panel.yaml
+    "tenacity>=8.3,<9.0",        # API retry/backoff
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/core"]

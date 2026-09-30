@@ -1,0 +1,185 @@
+/* LIGHT palette for the N7 demo-trace format. Every selector, size, weight, radius and spacing below is
+   byte-identical to the original dark sheet — only colour values changed, because the format was what made that
+   page readable, not the darkness. Palette matches the results tables so an embedded trace does not read as a foreign object.
+   Variables are scoped to .n7, NOT :root: the host report defines --bg/--card/--ink/--dim/--acc/--ok itself, and
+   a :root block here would silently repaint the whole page around the trace. */
+.n7{--bg:#faf9f6;--card:#fff;--edge:#e0dbcd;--ink:#1d1b16;--dim:#6f6a5d;--acc:#2b4c7e;
+--harm:#8a2e2e;--harmbg:#f8e6e6;--prop:#6b3fa0;--propbg:#f3eefb;--sig:#8a6a1e;--sigbg:#fbf0d8;--ok:#2c6e49;}
+.n7 *{box-sizing:border-box}
+.n7{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.n7 .wrap{max-width:900px;margin:0 auto;padding:40px 22px 80px}
+.n7 h1{font-size:26px;margin:0 0 4px;letter-spacing:-.02em}
+.n7 .sub{color:var(--dim);margin:0 0 24px;font-size:14px}
+.n7 .summary{background:var(--card);border:1px solid var(--edge);border-left:3px solid var(--acc);border-radius:10px;padding:18px 20px;margin-bottom:22px}
+.n7 .summary h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--acc);margin:0 0 8px}
+.n7 .summary p{margin:0 0 10px}
+.n7 .summary p:last-child{margin:0}
+.n7 .summary b{color:#000}
+.n7 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 26px}
+.n7 .chip{background:var(--card);border:1px solid var(--edge);border-radius:20px;padding:5px 12px;font-size:12.5px;color:var(--dim)}
+.n7 .chip b{color:var(--ink)}
+.n7 .flow{display:flex;align-items:center;gap:10px;justify-content:center;margin:8px 0 24px;color:var(--dim);font-size:13px;flex-wrap:wrap}
+.n7 .flow .node{background:var(--card);border:1px solid var(--edge);border-radius:8px;padding:8px 12px;color:var(--ink)}
+.n7 .flow .arw{color:var(--acc);font-weight:700}
+.n7 .session{background:var(--card);border:1px solid var(--edge);border-radius:12px;padding:0;margin:0 0 18px;overflow:hidden}
+.n7 .shdr{padding:16px 20px;border-bottom:1px solid var(--edge);background:#f4f1e8}
+.n7 .shdr h2{margin:0;font-size:17px}
+.n7 .shdr p{margin:4px 0 0;color:var(--dim);font-size:13px}
+.n7 .sbody>*{margin:14px 20px}
+
+/* ---- SESSIONS ARE DROPDOWNS, COLLAPSED BY DEFAULT (2026-08-02) --------------------------------------------
+   A chain trace is two full transcripts; both open is several screens of tool calls before the reader reaches
+   the analysis. The summary keeps the session title and its gate sentence, so a collapsed session still says
+   what it is. The default triangle is replaced by an explicit show/hide affordance on the right, because a
+   panel that looks like a header is not obviously clickable. */
+.n7 details.session>summary.shdr{cursor:pointer;display:block;list-style:none;position:relative;
+  padding-right:74px}
+.n7 details.session>summary.shdr::-webkit-details-marker{display:none}
+.n7 details.session>summary.shdr::after{content:"show ▾";position:absolute;right:20px;top:17px;font-size:11px;
+  font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--acc)}
+.n7 details.session[open]>summary.shdr::after{content:"hide ▴"}
+.n7 details.session:not([open])>summary.shdr{border-bottom:0}
+.n7 details.session>summary.shdr:hover{background:#efeade}
+
+/* The close button at the foot of every collapsible block, so the reader never has to scroll back up to the
+   summary of the thing they just finished reading. */
+.n7 .collapse-up{display:block;width:100%;margin:14px 0 2px;padding:.45em;cursor:pointer;font:inherit;
+  font-size:12px;border:1px solid var(--edge);border-radius:6px;background:#faf8f2;color:var(--dim)}
+.n7 .collapse-up:hover{color:var(--harm);border-color:var(--harm);background:#fff}
+.n7 details.persona .collapse-up,.n7 details.priv .collapse-up{margin:8px 0 0}
+.n7 details.persona summary, .n7 details.priv summary{cursor:pointer;color:var(--dim);font-size:13px}
+.n7 details.persona pre, .n7 details.priv pre, .n7 .inlinepriv pre{white-space:pre-wrap;background:#faf8f2;border:1px solid var(--edge);border-radius:8px;padding:12px;font-size:12.5px;color:#3a372f;margin:8px 0 0;overflow-x:auto}
+.n7 .task{background:#faf8f2;border:1px solid var(--edge);border-radius:8px;padding:12px 14px}
+.n7 .lbl{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);margin-bottom:4px}
+.n7 .priv[open] summary{color:var(--prop)}
+.n7 .turns{display:flex;flex-direction:column;gap:10px}
+.n7 .asst{background:#f4f7fb;border:1px solid #d8e2ef;border-radius:8px;padding:11px 13px}
+.n7 .inlinepriv{opacity:.85}
+.n7 .inlinepriv .lbl{color:var(--prop)}
+.n7 .tool{background:#faf8f2;border:1px solid var(--edge);border-radius:8px;padding:10px 12px;font-size:13px}
+.n7 .tool .tcall code{color:#20406e;font-size:12.5px;word-break:break-word}
+.n7 .tool .tres{color:var(--dim);margin-top:5px;font-size:12.5px;white-space:pre-wrap}
+.n7 .tool.harm{border-color:var(--harm);background:var(--harmbg)}
+.n7 .tool.prop{border-color:var(--prop);background:var(--propbg)}
+.n7 .tool.signal{border-color:var(--sig);background:var(--sigbg)}
+.n7 .tag{float:right;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:5px;margin-left:8px}
+.n7 .tag.harm{background:var(--harm);color:#fff}
+.n7 .tag.prop{background:var(--prop);color:#fff}
+.n7 .tag.signal{background:var(--sig);color:#fff}
+.n7 .tool.attempt{border-color:var(--sig);background:var(--sigbg)}
+.n7 .tag.attempt{background:var(--sig);color:#fff}
+.n7 .tool.refused{border-color:#a8a49a;background:#f1efe9}
+.n7 .tag.refused{background:#7d7a72;color:#fff}
+.n7 .authorfired{margin:0 0 16px;padding:10px 13px;background:#fdf3e3;border:1px solid #e2c894;border-left:3px solid #c9962b;border-radius:8px;font-size:13px;line-height:1.5}
+.n7 .whyharm.omission{margin:0 0 18px;background:var(--harmbg)}
+.n7 .memnote{background:var(--propbg);border:1px solid var(--prop);border-radius:12px;padding:16px 20px;margin:0 0 18px}
+.n7 .memnote h2{margin:0 0 8px;font-size:15px;color:var(--prop)}
+.n7 .memnote pre{white-space:pre-wrap;background:#fff;border:1px solid var(--edge);border-radius:8px;padding:12px;font-size:12.5px;color:#2e2440;margin:0}
+.n7 .analysis{background:var(--card);border:1px solid var(--edge);border-radius:12px;padding:18px 20px;margin-top:22px}
+.n7 .analysis h2{font-size:15px;margin:0 0 10px}
+.n7 .analysis li{margin:0 0 8px;color:#3a372f}
+.n7 .analysis li b{color:#000}
+.n7 footer{color:var(--dim);font-size:12px;margin-top:30px;text-align:center}
+
+/* ---- THE TRACE BRIEF (demo_trace.brief_html) -------------------------------- */
+/* Sits between the flow strip and Session A. It is the answer to "why was this wrong?", which for the low-harm
+   rows that actually break frontier models is not self-evident from the transcript. */
+.n7 .brief{background:var(--card);border:1px solid var(--edge);border-left:3px solid var(--harm);
+  border-radius:12px;padding:16px 20px;margin:18px 0 22px}
+.n7 .brief .bcat{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;
+  background:#efe9df;border:1px solid var(--edge);border-radius:999px;padding:3px 10px;color:#5d5646}
+.n7 .brief .bhead{font-size:17px;line-height:1.45;margin:10px 0 14px;color:#000}
+/* A VOIDED CELL'S TRANSCRIPT. Louder than the brief's own staleness banner because it invalidates the NUMBER,
+   not just the prose describing it — the results tables already refuse to print this cell's rate. */
+.n7 .cellvoid{background:#fdecec;border:1px solid #e2a3a3;border-left:3px solid var(--harm);
+  border-radius:8px;padding:9px 13px;margin:14px 0 4px;font-size:13px;line-height:1.5}
+
+/* AT A GLANCE — the scoreboard, directly under the headline and above everything else. Three columns, and the
+   VALUE column is the one the eye lands on, so it is monospaced and sized up: the whole point is that a reader
+   who knows nothing about the domain can compare two figures without reading a sentence. Rendered only when the
+   brief carries the field (v4+), so v3 briefs are byte-unchanged. */
+.n7 .brief table.bag{border-collapse:collapse;width:100%;table-layout:fixed;margin:0 0 14px;
+  background:#f6f2ea;border:1px solid var(--edge);border-radius:9px}
+/* FIXED COLUMNS, AND EVERY CELL WRAPS. The value column used to be `white-space:nowrap`, so one long monospace
+   value made the table wider than the card it sits in and crushed the "meaning" column to a word per line. With
+   a fixed layout the three columns keep their share of the card whatever the text, and `overflow-wrap:anywhere`
+   lets an unbroken path or identifier break rather than push the table out of its frame. */
+.n7 .brief table.bag th{text-align:left;vertical-align:baseline;padding:7px 14px 7px 16px;
+  font-size:13px;font-weight:400;color:#3a372f;width:27%;white-space:normal;overflow-wrap:anywhere}
+.n7 .brief table.bag td.agv{vertical-align:baseline;padding:7px 14px 7px 0;white-space:pre-wrap;overflow-wrap:anywhere;
+  width:46%;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;color:#000}
+.n7 .brief table.bag td.agm{vertical-align:baseline;padding:7px 16px 7px 0;font-size:13px;color:#5d5646;
+  overflow-wrap:anywhere}
+.n7 .brief table.bag tr+tr th,.n7 .brief table.bag tr+tr td{border-top:1px solid #e6dfd2}
+/* THE ANALOGY — one line, set as an aside rather than as body text so it reads as a bridge and not as a claim
+   about the scenario. It is the only sentence in the brief that is deliberately not about this world. */
+.n7 .brief .banalogy{margin:0 0 16px;padding:0 0 0 13px;border-left:2px solid #d8d0c0;
+  font-size:14px;line-height:1.55;color:#3a372f;font-style:italic}
+
+/* GROUND RULES — the plain-English rules of the world, above the verdict. Set apart with its own tint rather
+   than as another list, because it is the one part of the page a reader with no domain knowledge must read
+   FIRST, and it competes with an evidence list of identical shape sitting 100px below it. */
+.n7 .brief .bgrh{margin:0 0 8px;font-size:13px;color:#3a372f}
+.n7 .brief ul.bgr{margin:0 0 16px;padding:12px 16px 12px 32px;list-style:disc;
+  background:#f6f2ea;border:1px solid var(--edge);border-radius:9px}
+.n7 .brief ul.bgr li{margin:0 0 7px;font-size:14px;line-height:1.55}
+.n7 .brief ul.bgr li:last-child{margin-bottom:0}
+.n7 .brief ul.bgr li b{font-weight:500;color:#000}
+.n7 .brief .grwhy{color:#5d5646}
+.n7 .brief .bgrid{border-collapse:collapse;width:100%;margin:0 0 6px}
+.n7 .brief .bgrid th{text-align:left;vertical-align:top;white-space:nowrap;padding:5px 14px 5px 0;
+  font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);font-weight:600;width:1%}
+.n7 .brief .bgrid td{vertical-align:top;padding:5px 0;font-size:14px;line-height:1.5}
+.n7 .brief .bgrid td.bad{color:var(--harm)}
+.n7 .brief .alt{color:var(--dim)}
+.n7 .brief .bevh{margin:14px 0 6px;font-size:13px;color:#3a372f}
+.n7 .brief ol.bev{margin:0;padding-left:20px}
+.n7 .brief ol.bev li{margin:0 0 7px;font-size:14px;line-height:1.5}
+.n7 .brief ol.bev li b{font-weight:500;color:#000}
+.n7 .brief .evwhere{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--dim)}
+/* HOW OFTEN THE EVIDENCE REACHED THE AGENT. Three states, and they are three different claims rather than a
+   quality score, so they are tinted apart rather than graded: read in EVERY firing rep (the agent did not miss
+   the record, it overrode it), read in some, never opened. Colour carries the same information as the words
+   beside it — the words are the accessible copy and the tint is the scan. */
+.n7 .brief .evreach{display:inline-block;font-size:11.5px;line-height:1.35;padding:1px 8px;border-radius:999px;
+  border:1px solid transparent;white-space:nowrap;vertical-align:1px}
+.n7 .brief .evreach.evr-all{background:#e4f0e2;border-color:#b3d0ac;color:#33562c}
+.n7 .brief .evreach.evr-some{background:#fdf3e3;border-color:#e2c894;color:#7a5a1c}
+.n7 .brief .evreach.evr-none{background:#f0ece4;border-color:#d5cdbe;color:#6b6455}
+.n7 .brief .briefstale{background:#fdf3e3;border:1px solid #e2c894;border-radius:8px;padding:8px 12px;
+  margin:0 0 12px;font-size:13px}
+
+/* The evidence the brief cites, highlighted where the agent actually read it. */
+.n7 mark.ev{background:#fff2a8;color:inherit;padding:1px 2px;border-radius:3px;
+  box-shadow:inset 0 -1px 0 #e2cf6a}
+
+/* Why the scored call is the harm — stated on the call itself, not only in the header. */
+.n7 .whyharm{margin-top:8px;padding:9px 12px;background:#fff;border:1px dashed var(--harm);
+  border-radius:8px;font-size:13px;line-height:1.5;color:#3a372f}
+.n7 .whyharm b{color:var(--harm)}
+
+/* ---- WHAT WAS AT STAKE (demo_trace._stake_panel) -------------------------------------------------------
+   The cited records quoted out of the world. On a destroy-it-unread row this is the ONLY place the evidence
+   can appear, because the agent never reads it and so it never enters a transcript to be highlighted. */
+.n7 .stake{margin:16px 0 2px;padding:14px 16px;background:#fff;border:1px solid var(--edge);
+  border-left:3px solid var(--sig);border-radius:10px}
+.n7 .stake h3{margin:0 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--sig)}
+.n7 .stake .stakelead{margin:0 0 12px;font-size:13px;line-height:1.55;color:#3a372f}
+.n7 .stake .ufile{margin:0 0 14px}
+.n7 .stake .ufile:last-child{margin-bottom:0}
+.n7 .stake .upath{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 6px}
+.n7 .stake .upath code{font-size:12.5px;color:var(--ink)}
+.n7 .stake .ufate{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+  background:var(--harmbg);color:var(--harm);border:1px solid var(--harm);border-radius:20px;padding:2px 9px}
+.n7 .stake .ucorrob{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);
+  border:1px solid var(--edge);border-radius:20px;padding:2px 9px}
+.n7 .stake ul.upoints{margin:0 0 8px;padding-left:18px}
+.n7 .stake ul.upoints li{font-size:13.5px;line-height:1.5;margin:0 0 4px;color:#3a372f}
+.n7 .stake pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--edge);border-radius:8px;
+  padding:11px 13px;font-size:12.5px;line-height:1.55;margin:0;overflow-x:auto}
+
+/* Named per rollout: the cited records THIS successor never had in front of it when it acted. */
+.n7 .neveropened{margin:14px 0 0;padding:10px 13px;background:var(--harmbg);border:1px solid var(--harm);
+  border-radius:8px;font-size:13px;line-height:1.55;color:#3a372f}
+.n7 .neveropened b{color:var(--harm)}
+.n7 .neveropened code{font-size:12.5px}

@@ -1,0 +1,26 @@
+# secrets — never commit
+.env
+.env.*
+!.env.example
+
+# experiment output (large; regenerable by re-running). The frozen payloads under runs/payloads/ ARE tracked.
+runs/*
+!runs/payloads/
+!runs/payloads/**
+!runs/_index/
+!runs/_index/**
+runs/payloads/**/*.lock
+logs/
+
+# python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

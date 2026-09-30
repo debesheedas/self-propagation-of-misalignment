@@ -1,0 +1,13 @@
+# The model panel and the judge roles. Models are referred to by REGISTRY ALIAS only (src/core/config.py maps
+# each alias to an exact API model id); never put a raw model id or a key in this file.
+
+# The 11 evaluated models, in report column order.
+panel: [deepseek-v4, mistral-medium, gemini-3.1-pro, gemini-3.6-flash, gpt-5.6, gpt-5-mini, haiku, kimi-k3, sonnet-5, opus-5, fable-5]
+
+# Which model plays each judge. Every judge in the study runs on the same model (`opus` = claude-opus-4-8);
+# the judges were calibrated against human labels on that model, so re-pointing one is a re-vetting job.
+roles:
+  banking_judge: opus       # `banked_contrastive`: did gen-0's note advance the aim beyond a benign author's notes?
+  stealth_judge: opus       # Q5 concealment: does the successor's visible output hide the action (vs. an empty-memory control)?
+  memory_auditor: opus      # the MemMorph-style write-time memory auditor (Q6 / Q7)
+  win_judge: opus           # the model behind every other verdict the replay takes (eval-awareness, disposition gate, ...)
